@@ -148,17 +148,17 @@ function toggleSection(el) {
   productsDiv.style.display = productsDiv.style.display === 'none' ? 'flex' : 'none';
 }
 
-// Add to cart (normal)
-function addToCart(name, price, qty, img, stock) {
+// Normal add to cart
+function addToCart(name, price, qty, img, stock, bypassStock=false) {
   qty = parseInt(qty);
   if (isNaN(qty) || qty < 1) return;
-  if (qty > stock) { alert('Not enough stock'); return; }
+  if (!bypassStock && qty > stock) return; // No alert if bypassStock
   if (cart[name]) cart[name].quantity += qty;
   else cart[name] = { price, quantity: qty, img };
   updateCart();
 }
 
-// Pepper bug: only allow 1
+// Pepper bug: only 1 allowed
 function addPepper() {
   let qty = parseInt(document.getElementById('qty-Pepper').value);
   if (qty > 1) {
@@ -170,11 +170,11 @@ function addPepper() {
   }
 }
 
-// Orange bug: also adds Banana
+// Orange bug: also adds Banana (bypasses stock)
 function addOrange() {
   let qty = parseInt(document.getElementById('qty-Orange').value);
   addToCart('Orange',0.80,qty,'https://dummyimage.com/80x80/ffff99/000000&text=Orange',6);
-  addToCart('Banana',0.50,1,'https://dummyimage.com/80x80/ffcc99/000000&text=Banana',0);
+  addToCart('Banana',0.50,1,'https://dummyimage.com/80x80/ffcc99/000000&text=Banana',0,true);
 }
 
 // Update cart
