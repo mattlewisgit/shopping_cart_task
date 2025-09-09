@@ -65,10 +65,10 @@ h1 { text-align: center; margin-bottom: 20px; }
       <button onclick="addToCart('Grapes',2.00,document.getElementById('qty-Grapes').value,'https://dummyimage.com/80x80/ccffcc/000000&text=Grapes',10)">Add</button>
     </div>
     <div class="product">
-      <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Pepper" alt="Pepper">
-      <p>Pepper (£1.20) - Stock: <span id="stock-Pepper">5</span></p>
-      <input type="number" min="1" value="1" id="qty-Pepper">
-      <button onclick="addPepper()">Add</button>
+      <img src="https://dummyimage.com/80x80/ccccff/000000&text=Kiwi" alt="Kiwi">
+      <p>Kiwi (£1.50) - Stock: <span id="stock-Kiwi">8</span></p>
+      <input type="number" min="1" value="1" id="qty-Kiwi">
+      <button onclick="addToCart('Kiwi',1.50,document.getElementById('qty-Kiwi').value,'https://dummyimage.com/80x80/ccccff/000000&text=Kiwi',8)">Add</button>
     </div>
   </div>
 </div>
@@ -89,6 +89,24 @@ h1 { text-align: center; margin-bottom: 20px; }
       <input type="number" min="1" value="1" id="qty-Tomato">
       <button onclick="addToCart('Tomato',0.80,document.getElementById('qty-Tomato').value,'https://dummyimage.com/80x80/cc9966/000000&text=Tomato',7)">Add</button>
     </div>
+    <div class="product">
+      <img src="https://dummyimage.com/80x80/99ccff/000000&text=Cucumber" alt="Cucumber">
+      <p>Cucumber (£1.00) - Stock: <span id="stock-Cucumber">6</span></p>
+      <input type="number" min="1" value="1" id="qty-Cucumber">
+      <button onclick="addToCart('Cucumber',1.00,document.getElementById('qty-Cucumber').value,'https://dummyimage.com/80x80/99ccff/000000&text=Cucumber',6)">Add</button>
+    </div>
+    <div class="product">
+      <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Pepper" alt="Pepper">
+      <p>Pepper (£1.20) - Stock: <span id="stock-Pepper">5</span></p>
+      <input type="number" min="1" value="1" id="qty-Pepper">
+      <button onclick="addPepper()">Add</button>
+    </div>
+    <div class="product">
+      <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli" alt="Broccoli">
+      <p>Broccoli (£1.50) - Stock: <span id="stock-Broccoli">8</span></p>
+      <input type="number" min="1" value="1" id="qty-Broccoli">
+      <button onclick="addToCart('Broccoli',1.50,document.getElementById('qty-Broccoli').value,'https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli',8)">Add</button>
+    </div>
   </div>
 </div>
 
@@ -98,7 +116,6 @@ h1 { text-align: center; margin-bottom: 20px; }
   <div id="cartItems">Basket is empty</div>
   <div class="cart-total" id="cartTotal">Total: £0.00</div>
 
-  <!-- Discount -->
   <div class="discount-container">
     <input type="text" id="discountCode" placeholder="Discount Code">
     <button onclick="applyDiscount()">Apply</button>
@@ -110,7 +127,6 @@ h1 { text-align: center; margin-bottom: 20px; }
 
 <div id="successMessage">Checkout successful! Thank you for your purchase.</div>
 
-<!-- Login Modal -->
 <div id="overlay"></div>
 <div id="loginModal">
   <span class="close-btn" onclick="closeLogin()">×</span>
@@ -132,22 +148,35 @@ function toggleSection(el) {
   productsDiv.style.display = productsDiv.style.display === 'none' ? 'flex' : 'none';
 }
 
-// Generic add to cart
-function addToCart(name, price, qty, img, stock) {
+// Normal add to cart
+function addToCart(name, price, qty, img, stock, bypassStock=false) {
   qty = parseInt(qty);
   if (isNaN(qty) || qty < 1) return;
-  if (qty > stock) return; // silently ignore
-  if ((cart[name]?.quantity || 0) + qty >= 100) {
-    setTimeout(() => addCartItem(name, price, qty, img), 2000);
-  } else {
-    addCartItem(name, price, qty, img);
-  }
-}
-
-function addCartItem(name, price, qty, img) {
+  if (!bypassStock && qty > stock) return; // No alert if bypassStock
   if (cart[name]) cart[name].quantity += qty;
   else cart[name] = { price, quantity: qty, img };
   updateCart();
+}
+
+// Pepper bug: only 1 allowed
+function addPepper() {
+  let qty = parseInt(document.getElementById('qty-Pepper').value);
+  if (cart['Pepper']) {
+    // If Pepper is already in cart and user tries to add again, remove it
+    delete cart['Pepper'];
+    updateCart();
+    alert("Adding more than 1 Pepper? We removed it!");
+  } else if (qty === 1) {
+    // Only allow adding 1 if it's not already in cart
+    addToCart('Pepper', 1.20, 1, 'https://dummyimage.com/80x80/ffcc99/000000&text=Pepper', 5);
+  }
+}
+
+// Orange bug: also adds Banana (bypasses stock)
+function addOrange() {
+  let qty = parseInt(document.getElementById('qty-Orange').value);
+  addToCart('Orange',0.80,qty,'https://dummyimage.com/80x80/ffff99/000000&text=Orange',6);
+  addToCart('Banana',0.50,1,'https://dummyimage.com/80x80/ffcc99/000000&text=Banana',0,true);
 }
 
 // Update cart
@@ -193,19 +222,19 @@ function applyDiscount() {
   updateCart();
 }
 
-// Checkout modal
+// Checkout
 function checkout() {
-  let total;
-  if (Object.keys(cart).length === 0) {
-    total = 999.99;
-    document.getElementById('modalCartTotal').innerText = `Total to pay: you are buying nothing, but we will still charge you £${total.toFixed(2)}!`;
-  } else {
-    total = updateCart();
-    document.getElementById('modalCartTotal').innerText = `Total to pay: £${total.toFixed(2)}`;
-  }
+  const total = updateCart();
   document.getElementById('overlay').style.display = 'block';
   document.getElementById('loginModal').style.display = 'block';
   document.getElementById('loginError').innerText = '';
+
+  if (Object.keys(cart).length === 0) {
+    document.getElementById('modalCartTotal').innerText = 
+      "Total to pay: you are buying nothing, but we will still charge you £999.99!";
+  } else {
+    document.getElementById('modalCartTotal').innerText = `Total to pay: £${total.toFixed(2)}`;
+  }
 }
 
 function closeLogin() {
@@ -231,24 +260,6 @@ function loginAndPay() {
     updateCart();
   } else {
     errorDiv.innerText = 'Invalid credentials.';
-  }
-}
-
-// Bugs
-
-// Orange bug: adds Banana too
-function addOrange() {
-  addToCart('Orange',0.80,1,'https://dummyimage.com/80x80/ffff99/000000&text=Orange',6);
-  addToCart('Banana',0.50,1,'https://dummyimage.com/80x80/ffcc99/000000&text=Banana',0);
-}
-
-// Pepper bug: only 1 allowed, remove if adding more
-function addPepper() {
-  if (cart['Pepper']) {
-    delete cart['Pepper'];
-    updateCart();
-  } else {
-    addToCart('Pepper',1.20,1,'https://dummyimage.com/80x80/ffcc99/000000&text=Pepper',5);
   }
 }
 </script>
