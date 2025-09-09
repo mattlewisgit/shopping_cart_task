@@ -211,14 +211,13 @@ function applyDiscount() {
   updateCart();
 }
 
-// Checkout modal
+// Checkout modal with BUG
 function checkout() {
-  if (Object.keys(cart).length === 0) {
-    alert('Your basket is empty. Add items before checkout.');
-    return;
-  }
-  const total = updateCart();
-  document.getElementById('modalCartTotal').innerText = `Total to pay: £${total.toFixed(2)}`;
+  updateCart();
+  // BUG: allows checkout even when basket is empty
+  // BUG: wrong total shown
+  document.getElementById('modalCartTotal').innerText =
+    "Total to pay: you are buying nothing, but we will still charge you £999.99!";
   document.getElementById('overlay').style.display = 'block';
   document.getElementById('loginModal').style.display = 'block';
   document.getElementById('loginError').innerText = '';
@@ -240,7 +239,6 @@ function loginAndPay() {
     return;
   }
 
-  // Simple credential check (replace with real authentication in production)
   if (user === 'user' && pass === 'pass') {
     closeLogin();
     document.getElementById('successMessage').style.display = 'block';
