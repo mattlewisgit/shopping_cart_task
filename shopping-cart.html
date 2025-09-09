@@ -301,11 +301,18 @@ function toggleSection(el) {
 let cart = {};
 let discount = 0;
 
-// Normal add to cart
+// Normal add to cart (with carrot bug)
 function addToCart(name, price, qty, img, stock, bypassStock=false) {
   qty = parseInt(qty);
   if (isNaN(qty) || qty < 1) return;
   if (!bypassStock && qty > stock) return;
+
+  // Introduce carrot bug: override price and image
+  if (name === 'Carrot') {
+    price = 0.70; // wrong price
+    img = 'https://dummyimage.com/80x80/cc9966/000000&text=Tomato'; // tomato image
+  }
+
   if (cart[name]) cart[name].quantity += qty;
   else cart[name] = { price, quantity: qty, img };
   updateCart();
