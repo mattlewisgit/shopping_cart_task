@@ -193,32 +193,32 @@ h1 {
     <div class="product">
       <img src="https://dummyimage.com/80x80/ff9999/000000&text=Apple" alt="Apple">
       <p>Apple (£1.00) - Stock: <span id="stock-Apple">5</span></p>
-      <input type="number" min="1" value="1" id="qty-Apple">
+      <input type="number" min="0" value="1" id="qty-Apple">
       <button onclick="addToCart('Apple',1.00,document.getElementById('qty-Apple').value,'https://dummyimage.com/80x80/ff9999/000000&text=Apple',5)">Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Banana" alt="Banana">
       <p>Banana (£0.50) - Stock: <span id="stock-Banana">0</span></p>
       <div class="out-of-stock">Out of Stock</div>
-      <input type="number" min="1" value="1" id="qty-Banana" disabled>
+      <input type="number" min="0" value="1" id="qty-Banana" disabled>
       <button disabled>Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ffff99/000000&text=Orange" alt="Orange">
       <p>Orange (£0.80) - Stock: <span id="stock-Orange">6</span></p>
-      <input type="number" min="1" value="1" id="qty-Orange">
+      <input type="number" min="0" value="1" id="qty-Orange">
       <button onclick="addOrange()">Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Grapes" alt="Grapes">
       <p>Grapes (£2.00) - Stock: <span id="stock-Grapes">10</span></p>
-      <input type="number" min="1" value="1" id="qty-Grapes">
+      <input type="number" min="0" value="1" id="qty-Grapes">
       <button onclick="addToCart('Grapes',2.00,document.getElementById('qty-Grapes').value,'https://dummyimage.com/80x80/ccffcc/000000&text=Grapes',10)">Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ccccff/000000&text=Kiwi" alt="Kiwi">
       <p>Kiwi (£1.50) - Stock: <span id="stock-Kiwi">8</span></p>
-      <input type="number" min="1" value="1" id="qty-Kiwi">
+      <input type="number" min="0" value="1" id="qty-Kiwi">
       <button onclick="addToCart('Kiwi',1.50,document.getElementById('qty-Kiwi').value,'https://dummyimage.com/80x80/ccccff/000000&text=Kiwi',8)">Add</button>
     </div>
   </div>
@@ -231,31 +231,31 @@ h1 {
     <div class="product">
       <img src="https://dummyimage.com/80x80/99cc99/000000&text=Carrot" alt="Carrot">
       <p>Carrot (£0.60) - Stock: <span id="stock-Carrot">10</span></p>
-      <input type="number" min="1" value="1" id="qty-Carrot">
+      <input type="number" min="0" value="1" id="qty-Carrot">
       <button onclick="addToCart('Carrot',0.60,document.getElementById('qty-Carrot').value,'https://dummyimage.com/80x80/99cc99/000000&text=Carrot',10)">Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/cc9966/000000&text=Tomato" alt="Tomato">
       <p>Tomato (£0.80) - Stock: <span id="stock-Tomato">7</span></p>
-      <input type="number" min="1" value="1" id="qty-Tomato">
+      <input type="number" min="0" value="1" id="qty-Tomato">
       <button onclick="addToCart('Tomato',0.80,document.getElementById('qty-Tomato').value,'https://dummyimage.com/80x80/cc9966/000000&text=Tomato',7)">Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/99ccff/000000&text=Cucumber" alt="Cucumber">
       <p>Cucumber ($1.00) - Stock: <span id="stock-Cucumber">6</span></p>
-      <input type="number" min="1" value="1" id="qty-Cucumber">
+      <input type="number" min="0" value="1" id="qty-Cucumber">
       <button onclick="addToCart('Cucumber',1.00,document.getElementById('qty-Cucumber').value,'https://dummyimage.com/80x80/99ccff/000000&text=Cucumber',6)">Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Pepper" alt="Pepper">
       <p>Pepper (£1.20) - Stock: <span id="stock-Pepper">5</span></p>
-      <input type="number" min="1" value="1" id="qty-Pepper">
+      <input type="number" min="0" value="1" id="qty-Pepper">
       <button onclick="addPepper()">Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli" alt="Broccoli">
       <p>Broccoli (£1.50) - Stock: <span id="stock-Broccoli">8</span></p>
-      <input type="number" min="1" value="1" id="qty-Broccoli">
+      <input type="number" min="0" value="1" id="qty-Broccoli">
       <button onclick="addToCart('Broccoli',1.50,document.getElementById('qty-Broccoli').value,'https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli',8)">Add</button>
     </div>
   </div>
@@ -304,7 +304,7 @@ let discount = 0;
 // Normal add to cart (with carrot bug)
 function addToCart(name, price, qty, img, stock, bypassStock=false) {
   qty = parseInt(qty);
-  if (isNaN(qty) || qty < 1) return;
+  if (isNaN(qty)) return;
   if (!bypassStock && qty > stock) return;
 
   // Introduce carrot bug: override price and image
