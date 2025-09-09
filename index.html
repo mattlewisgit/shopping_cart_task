@@ -7,117 +7,238 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px;
-      background: #f9f9f9;
+      margin: 20px;
+      background: #f5f5f5;
     }
 
-    .shop, .cart {
-      border: 2px solid #444;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 10px;
+    h1 { text-align: center; }
+
+    .section {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
       background: #fff;
-      box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
-      width: 250px;
     }
 
-    h2 {
-      margin-top: 0;
+    .products { display: flex; gap: 15px; flex-wrap: wrap; }
+
+    .product {
+      border: 1px solid #aaa;
+      padding: 10px;
+      border-radius: 6px;
+      background: #fafafa;
+      width: 140px;
       text-align: center;
     }
 
-    .product {
+    .cart {
+      margin-top: 20px;
+      padding: 10px;
+      border: 2px solid #444;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .cart-item {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
     }
+
+    .cart-item button { margin-left: 10px; padding: 2px 6px; font-size: 12px; }
 
     button {
+      margin-top: 8px;
       padding: 5px 10px;
-      border: 1px solid #888;
-      border-radius: 6px;
-      background: #eee;
       cursor: pointer;
-      transition: background 0.2s;
+      border: 1px solid #888;
+      border-radius: 4px;
+      background: #f0f0f0;
     }
 
-    button:hover {
-      background: #ddd;
-    }
+    button:hover { background: #ddd; }
 
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
-
-    .total {
+    #checkout {
+      margin-top: 10px;
+      width: 100%;
+      background: #4caf50;
+      color: white;
       font-weight: bold;
-      margin-top: 15px;
-      text-align: right;
     }
+
+    #checkout:hover { background: #45a049; }
+
+    #message { margin-top: 10px; font-weight: bold; text-align: center; }
+
+    .success { color: green; }
+    .error { color: red; }
+
+    /* Login popup styles */
+    #loginPopup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border: 2px solid #444;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    #loginPopup input { display: block; width: 100%; margin: 8px 0; padding: 5px; }
+    #loginPopup button { width: 100%; margin-top: 10px; }
   </style>
 </head>
 <body>
-  <div class="shop">
-    <h2>Products</h2>
-    <div class="product">
-      <span>Apple - £1.20</span>
-      <button onclick="addToCart('Apple', 1.20)">Add</button>
-    </div>
-    <div class="product">
-      <span>Banana - £0.80</span>
-      <button onclick="addToCart('Banana', 0.80)">Add</button>
-    </div>
-    <div class="product">
-      <span>Orange - £1.00</span>
-      <button onclick="addToCart('Orange', 1.00)">Add</button>
+  <h1>Mini Shopping Cart</h1>
+
+  <!-- Fruits Section -->
+  <div class="section">
+    <h2>Fruits</h2>
+    <div class="products">
+      <div class="product"><p>Apple (£1.00)</p><button onclick="addToCart('Apple', 1.00)">Add</button></div>
+      <div class="product"><p>Banana (£0.50)</p><button onclick="addToCart('Banana', 0.50)">Add</button></div>
+      <div class="product"><p>Orange (£0.80)</p><button onclick="addToCart('Orange', 0.80)">Add</button></div>
     </div>
   </div>
 
+  <!-- Drinks Section -->
+  <div class="section">
+    <h2>Drinks</h2>
+    <div class="products">
+      <div class="product"><p>Water (£1.20)</p><button onclick="addToCart('Water', 1.20)">Add</button></div>
+      <div class="product"><p>Juice (£1.50)</p><button onclick="addToCart('Juice', 1.50)">Add</button></div>
+      <div class="product"><p>Coffee (£2.00)</p><button onclick="addToCart('Coffee', 2.00)">Add</button></div>
+    </div>
+  </div>
+
+  <!-- Snacks Section -->
+  <div class="section">
+    <h2>Snacks</h2>
+    <div class="products">
+      <div class="product"><p>Chips (£1.30)</p><button onclick="addToCart('Chips', 1.30)">Add</button></div>
+      <div class="product"><p>Chocolate (£1.80)</p><button onclick="addToCart('Chocolate', 1.80)">Add</button></div>
+      <div class="product"><p>Biscuits (£1.40)</p><button onclick="addToCart('Biscuits', 1.40)">Add</button></div>
+      <div class="product"><p>Popcorn (£1.60)</p><button onclick="addToCart('Popcorn', 1.60)">Add</button></div>
+    </div>
+  </div>
+
+  <!-- Basket -->
   <div class="cart">
     <h2>Basket</h2>
-    <ul id="cart-items"></ul>
-    <div class="total">Total: £<span id="total">0.00</span></div>
+    <div id="cart"></div>
+    <p><strong>Total: £<span id="total">0.00</span></strong></p>
+    <button id="checkout" onclick="checkout()">Checkout</button>
+    <p id="message"></p>
+  </div>
+
+  <!-- Overlay + Login Popup -->
+  <div id="overlay"></div>
+  <div id="loginPopup">
+    <h3>Login to Continue</h3>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="submitLogin()">Login</button>
+    <p id="loginError" class="error"></p>
   </div>
 
   <script>
-    const cartItems = document.getElementById('cart-items');
-    const totalElement = document.getElementById('total');
-    let total = 0;
+    let cart = {};
 
-    function addToCart(product, price) {
-      // Add item to list
-      const li = document.createElement('li');
-      li.textContent = `${product} - £${price.toFixed(2)}`;
-      
-      // Remove button
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = "Remove";
-      removeBtn.onclick = function() {
-        cartItems.removeChild(li);
-        total -= price;
-        updateTotal();
-      };
-
-      li.appendChild(removeBtn);
-      cartItems.appendChild(li);
-
-      // Update total
-      total += price;
-      updateTotal();
+    function addToCart(item, price) {
+      if (cart[item]) {
+        cart[item].quantity++;
+      } else {
+        cart[item] = { price, quantity: 1 };
+      }
+      renderCart();
     }
 
-    function updateTotal() {
-      totalElement.textContent = total.toFixed(2);
+    function removeFromCart(item) {
+      if (cart[item]) {
+        cart[item].quantity--;
+        if (cart[item].quantity <= 0) delete cart[item];
+        renderCart();
+      }
+    }
+
+    function renderCart() {
+      const cartDiv = document.getElementById("cart");
+      cartDiv.innerHTML = "";
+      let total = 0;
+
+      for (let item in cart) {
+        const entry = cart[item];
+        const subtotal = entry.price * entry.quantity;
+        total += subtotal;
+
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <span>${item} x${entry.quantity} (£${subtotal.toFixed(2)})</span>
+          <button onclick="removeFromCart('${item}')">Remove</button>
+        `;
+        cartDiv.appendChild(div);
+      }
+
+      document.getElementById("total").textContent = total.toFixed(2);
+      document.getElementById("message").textContent = "";
+    }
+
+    function checkout() {
+      const message = document.getElementById("message");
+      if (Object.keys(cart).length === 0) {
+        message.textContent = "Your basket is empty!";
+        message.className = "error";
+        return;
+      }
+
+      // Show login popup
+      document.getElementById("overlay").style.display = "block";
+      document.getElementById("loginPopup").style.display = "block";
+      document.getElementById("loginError").textContent = "";
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+    }
+
+    function submitLogin() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const error = document.getElementById("loginError");
+
+      // Fake validation: only username=test, password=123 works
+      if (username !== "test" || password !== "123") {
+        error.textContent = "Invalid credentials!";
+        return;
+      }
+
+      // Close popup
+      document.getElementById("overlay").style.display = "none";
+      document.getElementById("loginPopup").style.display = "none";
+
+      const message = document.getElementById("message");
+      message.textContent = "Processing payment...";
+      message.className = "";
+
+      setTimeout(() => {
+        message.textContent = "✅ Checkout complete! Thank you for your order.";
+        message.className = "success";
+        cart = {};
+        renderCart();
+      }, 2000);
     }
   </script>
 </body>
