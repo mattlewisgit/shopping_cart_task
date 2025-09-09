@@ -1,130 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kingfisher Shopping Cart</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .section-header {
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 20px;
-      background: #ddd;
-      padding: 5px;
-      border-radius: 5px;
-    }
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 5px;
-    }
-    .product {
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 5px;
-      width: 150px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: #fff;
-      position: relative;
-    }
-    .product img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      margin-bottom: 5px;
-    }
-    .out-of-stock {
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: rgba(255,0,0,0.7);
-      color: #fff;
-      width: 100%;
-      text-align: center;
-      font-weight: bold;
-      border-radius: 5px 5px 0 0;
-      padding: 2px 0;
-    }
-    .cart {
-      margin-top: 30px;
-      border: 2px solid #444;
-      border-radius: 10px;
-      padding: 10px;
-      background: #fff;
-    }
-    .cart-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-bottom: 5px;
-    }
-    .cart-item img {
-      width: 40px;
-      height: 40px;
-    }
-    .cart-total {
-      font-weight: bold;
-      margin-top: 10px;
-    }
-    #checkout {
-      margin-top: 10px;
-      padding: 5px 10px;
-    }
-    #overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-    }
-    #loginPopup {
-      display: none;
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      width: 250px;
-      text-align: center;
-      z-index: 10;
-    }
-    #loginPopup input {
-      width: 90%;
-      margin: 5px 0;
-      padding: 5px;
-    }
-    .close-btn {
-      position: absolute;
-      top: 5px; right: 10px;
-      cursor: pointer;
-      font-size: 18px;
-    }
-    .error { color: red; }
-    .success { color: green; }
-    .discount-container {
-      margin-top: 10px;
-    }
-    .discount-container input {
-      padding: 5px;
-      width: 150px;
-    }
-    .discount-container button {
-      padding: 5px 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kingfisher Shopping Cart</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
+h1 { text-align: center; margin-bottom: 20px; }
+.section-header { font-weight: bold; cursor: pointer; margin-top: 20px; background: #ddd; padding: 5px; border-radius: 5px; }
+.products { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
+.product { border: 1px solid #ccc; border-radius: 5px; padding: 5px; width: 150px; display: flex; flex-direction: column; align-items: center; background: #fff; position: relative; }
+.product img { width: 80px; height: 80px; object-fit: cover; margin-bottom: 5px; }
+.out-of-stock { position: absolute; top: 0; left: 0; background: rgba(255,0,0,0.7); color: #fff; width: 100%; text-align: center; font-weight: bold; border-radius: 5px 5px 0 0; padding: 2px 0; }
+.cart { margin-top: 30px; border: 2px solid #444; border-radius: 10px; padding: 10px; background: #fff; }
+.cart-item { display: flex; align-items: center; gap: 5px; margin-bottom: 5px; }
+.cart-item img { width: 40px; height: 40px; }
+.cart-total { font-weight: bold; margin-top: 10px; }
+#checkout { margin-top: 10px; padding: 5px 10px; }
+.discount-container { margin-top: 10px; }
+.discount-container input { padding: 5px; width: 150px; }
+.discount-container button { padding: 5px 10px; }
+.error { color: red; }
+.success { color: green; }
+#successMessage { display: none; text-align: center; font-weight: bold; color: green; margin-top: 20px; }
+
+/* Modal */
+#overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+#loginModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; border-radius: 10px; width: 300px; text-align: center; z-index: 10; }
+#loginModal input { width: 90%; margin: 5px 0; padding: 5px; }
+.close-btn { position: absolute; top: 5px; right: 10px; cursor: pointer; font-size: 18px; }
+</style>
 </head>
 <body>
 
@@ -221,14 +126,18 @@
   <button id="checkout" onclick="checkout()">Checkout</button>
 </div>
 
-<!-- Login popup -->
+<div id="successMessage">Checkout successful! Thank you for your purchase.</div>
+
+<!-- Login Modal -->
 <div id="overlay"></div>
-<div id="loginPopup">
+<div id="loginModal">
   <span class="close-btn" onclick="closeLogin()">×</span>
   <h3>Login to continue</h3>
+  <p id="modalCartTotal">Total to pay: £0.00</p>
   <input type="text" id="username" placeholder="Username"><br>
   <input type="password" id="password" placeholder="Password"><br>
-  <button onclick="login()">Login</button>
+  <button onclick="loginAndPay()">Login & Pay</button>
+  <div id="loginError" class="error"></div>
 </div>
 
 <script>
@@ -246,23 +155,16 @@ function addToCart(name, price, qty, img, stock) {
   qty = parseInt(qty);
   if (isNaN(qty) || qty < 1) return;
   if (qty > stock) { alert('Not enough stock'); return; }
-
-  // Simulate 2-second delay if total quantity > 99
   if ((cart[name]?.quantity || 0) + qty >= 100) {
-    setTimeout(() => {
-      addCartItem(name, price, qty, img);
-    }, 2000);
+    setTimeout(() => addCartItem(name, price, qty, img), 2000);
   } else {
     addCartItem(name, price, qty, img);
   }
 }
 
 function addCartItem(name, price, qty, img) {
-  if (cart[name]) {
-    cart[name].quantity += qty;
-  } else {
-    cart[name] = { price, quantity: qty, img };
-  }
+  if (cart[name]) cart[name].quantity += qty;
+  else cart[name] = { price, quantity: qty, img };
   updateCart();
 }
 
@@ -279,11 +181,10 @@ function updateCart() {
     div.innerHTML = `<img src="${cart[item].img}"> ${item} (£${cart[item].price}) x ${cart[item].quantity} = £${lineTotal.toFixed(2)} <button onclick="removeFromCart('${item}')">Remove</button>`;
     cartItems.appendChild(div);
   }
-  if (Object.keys(cart).length === 0) {
-    cartItems.innerText = 'Basket is empty';
-  }
+  if (Object.keys(cart).length === 0) cartItems.innerText = 'Basket is empty';
   const totalWithDiscount = total * (1 - discount);
   document.getElementById('cartTotal').innerText = `Total: £${totalWithDiscount.toFixed(2)}`;
+  return totalWithDiscount;
 }
 
 // Remove item
@@ -292,18 +193,16 @@ function removeFromCart(name) {
   updateCart();
 }
 
-// Discount codes 10% to 100%
+// Discount codes
 const discountCodes = {};
-for (let i = 10; i <= 100; i += 10) {
-  discountCodes[`SAVE${i}`] = i / 100;
-}
+for (let i = 10; i <= 100; i += 10) discountCodes[`SAVE${i}`] = i/100;
 function applyDiscount() {
   const code = document.getElementById('discountCode').value.trim().toUpperCase();
   const message = document.getElementById('discountMessage');
   if (discountCodes[code]) {
     discount = discountCodes[code];
     message.className = 'success';
-    message.innerText = `Discount applied: ${discount * 100}%`;
+    message.innerText = `Discount applied: ${discount*100}%`;
   } else {
     discount = 0;
     message.className = 'error';
@@ -312,38 +211,43 @@ function applyDiscount() {
   updateCart();
 }
 
-// Checkout login
+// Checkout modal
 function checkout() {
   if (Object.keys(cart).length === 0) {
     alert('Your basket is empty. Add items before checkout.');
     return;
   }
+  const total = updateCart();
+  document.getElementById('modalCartTotal').innerText = `Total to pay: £${total.toFixed(2)}`;
   document.getElementById('overlay').style.display = 'block';
-  document.getElementById('loginPopup').style.display = 'block';
+  document.getElementById('loginModal').style.display = 'block';
+  document.getElementById('loginError').innerText = '';
 }
 
 function closeLogin() {
   document.getElementById('overlay').style.display = 'none';
-  document.getElementById('loginPopup').style.display = 'none';
+  document.getElementById('loginModal').style.display = 'none';
 }
 
-// Login and complete checkout
-function login() {
+// Login & Pay
+function loginAndPay() {
   const user = document.getElementById('username').value.trim();
   const pass = document.getElementById('password').value.trim();
+  const errorDiv = document.getElementById('loginError');
 
   if (!user || !pass) {
-    alert('Please enter both username and password.');
+    errorDiv.innerText = 'Please enter both username and password.';
     return;
   }
 
-  closeLogin();
-  alert(`Logged in as ${user}`);
-
-  if (Object.keys(cart).length > 0) {
-    alert('Checkout successful!');
+  // Simple credential check (replace with real authentication in production)
+  if (user === 'user' && pass === 'pass') {
+    closeLogin();
+    document.getElementById('successMessage').style.display = 'block';
     cart = {};
     updateCart();
+  } else {
+    errorDiv.innerText = 'Invalid credentials.';
   }
 }
 </script>
