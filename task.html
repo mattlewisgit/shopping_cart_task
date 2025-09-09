@@ -1,0 +1,36 @@
+## User Story
+
+**Goal:** Test the full shopping cart workflow including products, discounts, and checkout.
+
+**Scenario:**
+
+1. **Open the site:**  
+   - Open `https://mattlewisgit.github.io/shopping_cart_task/` in a browser.
+
+2. **Browse products:**  
+   - Click **Fruits** to expand and see products.  
+   - Add 2 Apples to the cart.  
+   - Attempt to add 1 Banana (should be blocked because stock = 0).  
+   - Add 1 Orange and 3 Grapes.
+
+3. **Verify cart:**  
+   - Ensure items appear with correct quantities and line totals.  
+   - Verify **Total** reflects added items.
+
+4. **Apply a discount code:**  
+   - Enter `SAVE20` and click **Apply**.  
+   - Verify **Total** updates with a 20% discount.
+
+5. **Checkout:**  
+   - Click **Checkout**.  
+   - Enter **Username:** `user` and **Password:** `pass`.  
+   - Click **Login & Pay**.  
+   - Confirm **Checkout Successful!** message appears.
+
+6. **Verify empty cart:**  
+   - Ensure cart is cleared and **Basket is empty** message is displayed.
+
+7. **Optional:**  
+   - Try adding more than 99 items of a product to test the 2-second simulated delay.
+
+---
