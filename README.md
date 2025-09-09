@@ -1,36 +1,42 @@
 # Kingfisher Shopping Cart Demo
 
-Calculator available at: https://mattlewisgit.github.io/shopping_cart_task/
+**Calculator available at:** [Demo Link](https://mattlewisgit.github.io/shopping_cart_task/)
 
-User Story
+---
 
-Title: Shopping Cart
+## User Story
 
-Description: As a kingfisher user, I want to add products to basket, log in and place an order to prove that my webpage works as expected
+**Title:** Shopping Cart
 
-Acceptance Criteria
+**Description:**  
+As a Kingfisher user, I want to add products to the basket, log in, and place an order to prove that my webpage works as expected.
 
-1) I can add all the available products to basket
-2) I can remove a single product quantity from basket
-3) I can apply a discount using:
-- SAVE10 = 10% discount
-- SAVE20 = 20% discount
-4) I can only checkout with the following credentials:
-username: user
-password: pass
-5) I receive a checkout successful! Thank you for your purchase message
+---
 
+## Acceptance Criteria
 
-Bugs:
+1. I can add all the available products to the basket.  
+2. I can remove a single product quantity from the basket.  
+3. I can apply a discount using:  
+   - `SAVE10` → 10% discount  
+   - `SAVE20` → 20% discount  
+4. I can only checkout with the following credentials:  
+   - **Username:** `user`  
+   - **Password:** `pass`  
+5. I receive a **"Checkout successful! Thank you for your purchase"** message.
 
-1) you can add and proceed through checkout with more than the stock available
-2) you can add discounts from 30% all the way up to 100% (using SAVE30 / SAVE40 ect)
-3) checkout without anything is basket!
-4) if multiple of the same product in basket, you cannot remove a single quantity.
-5) one product is in Dollars
-6) unable to add any more than 1 pepper to basket (removes pepper all together)
-7) Add Orange to shopping cart, actually adds a banana instead (which is out of stock)
-8) If username is correct, and password is empty, then chckout succeeds.
-9) Carrot value is £0.60, but in basket is £0.70
-10) Carrot image is incorrect in basket
-11) you can add quantity = 0 and proceed through checkout
+---
+
+## Known Bugs
+
+1. You can add and proceed through checkout with more than the stock available.  
+2. You can add discounts from 30% up to 100% (using `SAVE30`, `SAVE40`, etc.).  
+3. You can checkout with an empty basket.  
+4. If multiple quantities of the same product are in the basket, you cannot remove a single quantity.  
+5. One product is priced in **Dollars** instead of Pounds.  
+6. You cannot add more than 1 **Pepper** to the basket — attempting to add more removes it entirely.  
+7. Adding **Orange** to the cart also adds a **Banana** (which may be out of stock).  
+8. If the username is correct but the password is empty, checkout succeeds.  
+9. **Carrot** value is £0.60, but in the basket it shows as £0.70.  
+10. **Carrot** image is incorrect in the basket.  
+11. You can add a quantity of `0` and proceed through checkout.  
