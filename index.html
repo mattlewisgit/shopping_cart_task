@@ -173,26 +173,74 @@
         <input type="number" min="1" value="1" id="qty-Orange">
         <button onclick="addToCart('Orange', 0.80, document.getElementById('qty-Orange').value, 'https://dummyimage.com/80x80/ffcc99/000000&text=Orange')">Add</button>
       </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Grapes" alt="Grapes">
+        <p>Grapes (£2.00)</p>
+        <input type="number" min="1" value="1" id="qty-Grapes">
+        <button onclick="addToCart('Grapes', 2.00, document.getElementById('qty-Grapes').value, 'https://dummyimage.com/80x80/ccffcc/000000&text=Grapes')">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ccccff/000000&text=Mango" alt="Mango">
+        <p>Mango (£1.50)</p>
+        <input type="number" min="1" value="1" id="qty-Mango">
+        <button onclick="addToCart('Mango', 1.50, document.getElementById('qty-Mango').value, 'https://dummyimage.com/80x80/ccccff/000000&text=Mango')">Add</button>
+      </div>
     </div>
   </div>
 
-  <!-- Basket -->
-  <div class="cart">
-    <h2>Basket</h2>
-    <div id="cart"></div>
-    <p><strong>Total: £<span id="total">0.00</span></strong></p>
-    <button id="checkout" onclick="checkout()">Checkout</button>
-    <p id="message"></p>
+  <!-- Vegetables Section -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Vegetables</div>
+    <div class="products">
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Carrot" alt="Carrot">
+        <p>Carrot (£0.70)</p>
+        <input type="number" min="1" value="1" id="qty-Carrot">
+        <button onclick="addToCart('Carrot', 0.70, document.getElementById('qty-Carrot').value, 'https://dummyimage.com/80x80/ccffcc/000000&text=Carrot')">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ffccff/000000&text=Tomato" alt="Tomato">
+        <p>Tomato (£0.60)</p>
+        <input type="number" min="1" value="1" id="qty-Tomato">
+        <button onclick="addToCart('Tomato', 0.60, document.getElementById('qty-Tomato').value, 'https://dummyimage.com/80x80/ffccff/000000&text=Tomato')">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/cccccc/000000&text=Broccoli" alt="Broccoli">
+        <p>Broccoli (£1.20)</p>
+        <input type="number" min="1" value="1" id="qty-Broccoli">
+        <button onclick="addToCart('Broccoli', 1.20, document.getElementById('qty-Broccoli').value, 'https://dummyimage.com/80x80/cccccc/000000&text=Broccoli')">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ffff99/000000&text=Cucumber" alt="Cucumber">
+        <p>Cucumber (£0.90)</p>
+        <input type="number" min="1" value="1" id="qty-Cucumber">
+        <button onclick="addToCart('Cucumber', 0.90, document.getElementById('qty-Cucumber').value, 'https://dummyimage.com/80x80/ffff99/000000&text=Cucumber')">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ff9999/000000&text=Pepper" alt="Pepper">
+        <p>Pepper (£1.10)</p>
+        <input type="number" min="1" value="1" id="qty-Pepper">
+        <button onclick="addToCart('Pepper', 1.10, document.getElementById('qty-Pepper').value, 'https://dummyimage.com/80x80/ff9999/000000&text=Pepper')">Add</button>
+      </div>
+    </div>
   </div>
 
-  <!-- Overlay + Login Popup -->
+  <!-- Cart -->
+  <div class="cart">
+    <h2>Shopping Cart</h2>
+    <div id="cartItems"></div>
+    <button id="checkout" onclick="checkout()">Checkout</button>
+    <div id="message"></div>
+  </div>
+
+  <!-- Login Popup -->
   <div id="overlay"></div>
   <div id="loginPopup">
-    <div class="close-btn" onclick="closePopup()">×</div>
+    <span class="close-btn" onclick="closePopup()">×</span>
     <h3>Login to Continue</h3>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
-    <p id="loginError" class="error"></p>
+    <div id="loginError" class="error"></div>
     <button onclick="submitLogin()">Login</button>
   </div>
 
@@ -201,56 +249,51 @@
 
     function toggleSection(header) {
       const productsDiv = header.nextElementSibling;
-      productsDiv.style.display = productsDiv.style.display === "none" ? "flex" : "none";
+      productsDiv.style.display = (productsDiv.style.display === "none") ? "flex" : "none";
     }
 
-    function addToCart(name, price, qty, img) {
-      qty = parseInt(qty);
-      if(qty <= 0 || isNaN(qty)) return alert("Invalid quantity!");
-      if(cart[name]) cart[name].qty += qty;
-      else cart[name] = {price, qty, img};
-      renderCart();
-    }
-
-    function removeFromCart(name) {
-      delete cart[name];
+    function addToCart(name, price, quantity, img) {
+      quantity = parseInt(quantity);
+      if (!quantity || quantity < 1) quantity = 1;
+      if (cart[name]) {
+        cart[name].quantity += quantity;
+      } else {
+        cart[name] = {price, quantity, img};
+      }
       renderCart();
     }
 
     function renderCart() {
-      const cartDiv = document.getElementById("cart");
+      const cartDiv = document.getElementById("cartItems");
       cartDiv.innerHTML = "";
-      let total = 0;
-      for(let item in cart) {
-        const row = document.createElement("div");
-        row.className = "cart-item";
-        row.innerHTML = `
-          <img src="${cart[item].img}" alt="${item}">
-          <span>${item} (£${cart[item].price})</span> x 
-          <input type="number" min="1" value="${cart[item].qty}" onchange="updateQty('${item}', this.value)">
-          <span>Subtotal: £${(cart[item].price * cart[item].qty).toFixed(2)}</span>
-          <button onclick="removeFromCart('${item}')">Remove</button>
+      for (const [name, data] of Object.entries(cart)) {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+        itemDiv.innerHTML = `
+          <img src="${data.img}" alt="${name}">
+          <span>${name}</span>
+          <input type="number" min="1" value="${data.quantity}" onchange="updateQuantity('${name}', this.value)">
+          <span>× £${data.price.toFixed(2)}</span>
+          <span>= £${(data.price*data.quantity).toFixed(2)}</span>
+          <button onclick="removeItem('${name}')">Remove</button>
         `;
-        cartDiv.appendChild(row);
-        total += cart[item].price * cart[item].qty;
+        cartDiv.appendChild(itemDiv);
       }
-      document.getElementById("total").textContent = total.toFixed(2);
     }
 
-    function updateQty(name, value) {
-      value = parseInt(value);
-      if(value <= 0 || isNaN(value)) removeFromCart(name);
-      else {
-        cart[name].qty = value;
-        renderCart();
-      }
+    function updateQuantity(name, qty) {
+      qty = parseInt(qty);
+      if (!qty || qty < 1) qty = 1;
+      cart[name].quantity = qty;
+      renderCart();
+    }
+
+    function removeItem(name) {
+      delete cart[name];
+      renderCart();
     }
 
     function checkout() {
-      if(Object.keys(cart).length === 0) {
-        alert("Basket is empty!");
-        return;
-      }
       document.getElementById("overlay").style.display = "block";
       document.getElementById("loginPopup").style.display = "block";
     }
