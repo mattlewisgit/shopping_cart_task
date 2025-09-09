@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shopping Cart Demo</title>
+  <title>Interactive Shopping Cart</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,21 +15,41 @@
 
     .section {
       margin-bottom: 20px;
-      padding: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
       background: #fff;
     }
 
-    .products { display: flex; gap: 15px; flex-wrap: wrap; }
+    .section-header {
+      padding: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #e0e0e0;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .products {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      padding: 10px;
+    }
 
     .product {
       border: 1px solid #aaa;
       padding: 10px;
       border-radius: 6px;
       background: #fafafa;
-      width: 140px;
+      width: 150px;
       text-align: center;
+    }
+
+    .product img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      margin-bottom: 5px;
     }
 
     .cart {
@@ -43,13 +63,19 @@
     .cart-item {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 5px;
     }
 
-    .cart-item button { margin-left: 10px; padding: 2px 6px; font-size: 12px; }
+    .cart-item input {
+      width: 40px;
+      text-align: center;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
 
     button {
-      margin-top: 8px;
+      margin-top: 5px;
       padding: 5px 10px;
       cursor: pointer;
       border: 1px solid #888;
@@ -103,36 +129,76 @@
   </style>
 </head>
 <body>
-  <h1>Mini Shopping Cart</h1>
+  <h1>Interactive Shopping Cart</h1>
 
   <!-- Fruits Section -->
   <div class="section">
-    <h2>Fruits</h2>
+    <div class="section-header" onclick="toggleSection(this)">Fruits</div>
     <div class="products">
-      <div class="product"><p>Apple (£1.00)</p><button onclick="addToCart('Apple', 1.00)">Add</button></div>
-      <div class="product"><p>Banana (£0.50)</p><button onclick="addToCart('Banana', 0.50)">Add</button></div>
-      <div class="product"><p>Orange (£0.80)</p><button onclick="addToCart('Orange', 0.80)">Add</button></div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Apple" alt="Apple">
+        <p>Apple (£1.00)</p>
+        <button onclick="addToCart('Apple', 1.00)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Banana" alt="Banana">
+        <p>Banana (£0.50)</p>
+        <button onclick="addToCart('Banana', 0.50)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Orange" alt="Orange">
+        <p>Orange (£0.80)</p>
+        <button onclick="addToCart('Orange', 0.80)">Add</button>
+      </div>
     </div>
   </div>
 
   <!-- Drinks Section -->
   <div class="section">
-    <h2>Drinks</h2>
+    <div class="section-header" onclick="toggleSection(this)">Drinks</div>
     <div class="products">
-      <div class="product"><p>Water (£1.20)</p><button onclick="addToCart('Water', 1.20)">Add</button></div>
-      <div class="product"><p>Juice (£1.50)</p><button onclick="addToCart('Juice', 1.50)">Add</button></div>
-      <div class="product"><p>Coffee (£2.00)</p><button onclick="addToCart('Coffee', 2.00)">Add</button></div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Water" alt="Water">
+        <p>Water (£1.20)</p>
+        <button onclick="addToCart('Water', 1.20)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Juice" alt="Juice">
+        <p>Juice (£1.50)</p>
+        <button onclick="addToCart('Juice', 1.50)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Coffee" alt="Coffee">
+        <p>Coffee (£2.00)</p>
+        <button onclick="addToCart('Coffee', 2.00)">Add</button>
+      </div>
     </div>
   </div>
 
   <!-- Snacks Section -->
   <div class="section">
-    <h2>Snacks</h2>
+    <div class="section-header" onclick="toggleSection(this)">Snacks</div>
     <div class="products">
-      <div class="product"><p>Chips (£1.30)</p><button onclick="addToCart('Chips', 1.30)">Add</button></div>
-      <div class="product"><p>Chocolate (£1.80)</p><button onclick="addToCart('Chocolate', 1.80)">Add</button></div>
-      <div class="product"><p>Biscuits (£1.40)</p><button onclick="addToCart('Biscuits', 1.40)">Add</button></div>
-      <div class="product"><p>Popcorn (£1.60)</p><button onclick="addToCart('Popcorn', 1.60)">Add</button></div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Chips" alt="Chips">
+        <p>Chips (£1.30)</p>
+        <button onclick="addToCart('Chips', 1.30)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Chocolate" alt="Chocolate">
+        <p>Chocolate (£1.80)</p>
+        <button onclick="addToCart('Chocolate', 1.80)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Biscuits" alt="Biscuits">
+        <p>Biscuits (£1.40)</p>
+        <button onclick="addToCart('Biscuits', 1.40)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/80?text=Popcorn" alt="Popcorn">
+        <p>Popcorn (£1.60)</p>
+        <button onclick="addToCart('Popcorn', 1.60)">Add</button>
+      </div>
     </div>
   </div>
 
@@ -158,21 +224,28 @@
   <script>
     let cart = {};
 
+    function toggleSection(header) {
+      const productsDiv = header.nextElementSibling;
+      productsDiv.style.display = productsDiv.style.display === "none" ? "flex" : "none";
+    }
+
     function addToCart(item, price) {
-      if (cart[item]) {
-        cart[item].quantity++;
-      } else {
+      if (!cart[item]) {
         cart[item] = { price, quantity: 1 };
+      } else {
+        cart[item].quantity++;
       }
       renderCart();
     }
 
-    function removeFromCart(item) {
-      if (cart[item]) {
-        cart[item].quantity--;
-        if (cart[item].quantity <= 0) delete cart[item];
-        renderCart();
+    function updateQuantity(item, newQty) {
+      newQty = parseInt(newQty);
+      if (isNaN(newQty) || newQty <= 0) {
+        delete cart[item];
+      } else {
+        cart[item].quantity = newQty;
       }
+      renderCart();
     }
 
     function renderCart() {
@@ -188,7 +261,8 @@
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
-          <span>${item} x${entry.quantity} (£${subtotal.toFixed(2)})</span>
+          <span>${item} (£${entry.price})</span>
+          <input type="number" min="1" value="${entry.quantity}" onchange="updateQuantity('${item}', this.value)">
           <button onclick="removeFromCart('${item}')">Remove</button>
         `;
         cartDiv.appendChild(div);
@@ -196,6 +270,11 @@
 
       document.getElementById("total").textContent = total.toFixed(2);
       document.getElementById("message").textContent = "";
+    }
+
+    function removeFromCart(item) {
+      delete cart[item];
+      renderCart();
     }
 
     function checkout() {
@@ -206,7 +285,6 @@
         return;
       }
 
-      // Show login popup
       document.getElementById("overlay").style.display = "block";
       document.getElementById("loginPopup").style.display = "block";
       document.getElementById("loginError").textContent = "";
@@ -219,13 +297,11 @@
       const password = document.getElementById("password").value.trim();
       const error = document.getElementById("loginError");
 
-      // Fake validation: only username=test, password=123 works
       if (username !== "test" || password !== "123") {
         error.textContent = "Invalid credentials!";
         return;
       }
 
-      // Close popup
       document.getElementById("overlay").style.display = "none";
       document.getElementById("loginPopup").style.display = "none";
 
