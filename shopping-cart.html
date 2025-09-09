@@ -5,107 +5,268 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kingfisher Shopping Cart</title>
 <style>
-body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; }
-h1 { text-align: center; margin-bottom: 20px; }
-.section-header { font-weight: bold; cursor: pointer; margin-top: 20px; background: #ddd; padding: 5px; border-radius: 5px; }
-.products { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
-.product { border: 1px solid #ccc; border-radius: 5px; padding: 5px; width: 150px; display: flex; flex-direction: column; align-items: center; background: #fff; position: relative; }
-.product img { width: 80px; height: 80px; object-fit: cover; margin-bottom: 5px; }
-.out-of-stock { position: absolute; top: 0; left: 0; background: rgba(255,0,0,0.7); color: #fff; width: 100%; text-align: center; font-weight: bold; border-radius: 5px 5px 0 0; padding: 2px 0; }
-.cart { margin-top: 30px; border: 2px solid #444; border-radius: 10px; padding: 10px; background: #fff; }
-.cart-item { display: flex; align-items: center; gap: 5px; margin-bottom: 5px; }
-.cart-item img { width: 40px; height: 40px; }
-.cart-total { font-weight: bold; margin-top: 10px; }
-#checkout { margin-top: 10px; padding: 5px 10px; }
-.discount-container { margin-top: 10px; }
-.discount-container input { padding: 5px; width: 150px; }
-.discount-container button { padding: 5px 10px; }
-.error { color: red; }
-.success { color: green; }
-#successMessage { display: none; text-align: center; font-weight: bold; color: green; margin-top: 20px; }
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Container for the two sections side by side */
+.sections-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Individual section */
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Section header */
+.section-header {
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  background: #ddd;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: center;
+  width: 300px;
+}
+
+/* Products grid inside section */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.product {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  position: relative;
+}
+
+.product img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-bottom: 5px;
+}
+
+.out-of-stock {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255,0,0,0.7);
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+  padding: 2px 0;
+}
+
+/* Cart styling */
+.cart {
+  margin-top: 30px;
+  border: 2px solid #444;
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+  width: 350px;
+  text-align: center;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.cart-item img {
+  width: 40px;
+  height: 40px;
+}
+
+.cart-total {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+#checkout {
+  margin-top: 10px;
+  padding: 5px 10px;
+}
+
+.discount-container {
+  margin-top: 10px;
+}
+
+.discount-container input {
+  padding: 5px;
+  width: 150px;
+}
+
+.discount-container button {
+  padding: 5px 10px;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+
+#successMessage {
+  display: none;
+  text-align: center;
+  font-weight: bold;
+  color: green;
+  margin-top: 20px;
+}
 
 /* Modal */
-#overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
-#loginModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; border-radius: 10px; width: 300px; text-align: center; z-index: 10; }
-#loginModal input { width: 90%; margin: 5px 0; padding: 5px; }
-.close-btn { position: absolute; top: 5px; right: 10px; cursor: pointer; font-size: 18px; }
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+#loginModal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  z-index: 10;
+}
+
+#loginModal input {
+  width: 90%;
+  margin: 5px 0;
+  padding: 5px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
 </style>
 </head>
 <body>
 
 <h1>Kingfisher Shopping Cart</h1>
 
-<!-- Fruits Section -->
-<div>
-  <div class="section-header" onclick="toggleSection(this)">Fruits</div>
-  <div class="products">
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/ff9999/000000&text=Apple" alt="Apple">
-      <p>Apple (£1.00) - Stock: <span id="stock-Apple">5</span></p>
-      <input type="number" min="1" value="1" id="qty-Apple">
-      <button onclick="addToCart('Apple',1.00,document.getElementById('qty-Apple').value,'https://dummyimage.com/80x80/ff9999/000000&text=Apple',5)">Add</button>
-    </div>
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Banana" alt="Banana">
-      <p>Banana (£0.50) - Stock: <span id="stock-Banana">0</span></p>
-      <div class="out-of-stock">Out of Stock</div>
-      <input type="number" min="1" value="1" id="qty-Banana" disabled>
-      <button disabled>Add</button>
-    </div>
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/ffff99/000000&text=Orange" alt="Orange">
-      <p>Orange (£0.80) - Stock: <span id="stock-Orange">6</span></p>
-      <input type="number" min="1" value="1" id="qty-Orange">
-      <button onclick="addOrange()">Add</button>
-    </div>
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Grapes" alt="Grapes">
-      <p>Grapes (£2.00) - Stock: <span id="stock-Grapes">10</span></p>
-      <input type="number" min="1" value="1" id="qty-Grapes">
-      <button onclick="addToCart('Grapes',2.00,document.getElementById('qty-Grapes').value,'https://dummyimage.com/80x80/ccffcc/000000&text=Grapes',10)">Add</button>
-    </div>
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/ccccff/000000&text=Kiwi" alt="Kiwi">
-      <p>Kiwi (£1.50) - Stock: <span id="stock-Kiwi">8</span></p>
-      <input type="number" min="1" value="1" id="qty-Kiwi">
-      <button onclick="addToCart('Kiwi',1.50,document.getElementById('qty-Kiwi').value,'https://dummyimage.com/80x80/ccccff/000000&text=Kiwi',8)">Add</button>
+<div class="sections-container">
+  <!-- Fruits Section -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Fruits</div>
+    <div class="products">
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ff9999/000000&text=Apple" alt="Apple">
+        <p>Apple (£1.00) - Stock: <span id="stock-Apple">5</span></p>
+        <input type="number" min="1" value="1" id="qty-Apple">
+        <button onclick="addToCart('Apple',1.00,document.getElementById('qty-Apple').value,'https://dummyimage.com/80x80/ff9999/000000&text=Apple',5)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Banana" alt="Banana">
+        <p>Banana (£0.50) - Stock: <span id="stock-Banana">0</span></p>
+        <div class="out-of-stock">Out of Stock</div>
+        <input type="number" min="1" value="1" id="qty-Banana" disabled>
+        <button disabled>Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ffff99/000000&text=Orange" alt="Orange">
+        <p>Orange (£0.80) - Stock: <span id="stock-Orange">6</span></p>
+        <input type="number" min="1" value="1" id="qty-Orange">
+        <button onclick="addOrange()">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Grapes" alt="Grapes">
+        <p>Grapes (£2.00) - Stock: <span id="stock-Grapes">10</span></p>
+        <input type="number" min="1" value="1" id="qty-Grapes">
+        <button onclick="addToCart('Grapes',2.00,document.getElementById('qty-Grapes').value,'https://dummyimage.com/80x80/ccffcc/000000&text=Grapes',10)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ccccff/000000&text=Kiwi" alt="Kiwi">
+        <p>Kiwi (£1.50) - Stock: <span id="stock-Kiwi">8</span></p>
+        <input type="number" min="1" value="1" id="qty-Kiwi">
+        <button onclick="addToCart('Kiwi',1.50,document.getElementById('qty-Kiwi').value,'https://dummyimage.com/80x80/ccccff/000000&text=Kiwi',8)">Add</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Vegetables Section -->
-<div>
-  <div class="section-header" onclick="toggleSection(this)">Vegetables</div>
-  <div class="products">
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/99cc99/000000&text=Carrot" alt="Carrot">
-      <p>Carrot ($0.60) - Stock: <span id="stock-Carrot">10</span></p>
-      <input type="number" min="1" value="1" id="qty-Carrot">
-      <button onclick="addToCart('Carrot',0.60,document.getElementById('qty-Carrot').value,'https://dummyimage.com/80x80/99cc99/000000&text=Carrot',10)">Add</button>
-    </div>
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/cc9966/000000&text=Tomato" alt="Tomato">
-      <p>Tomato (£0.80) - Stock: <span id="stock-Tomato">7</span></p>
-      <input type="number" min="1" value="1" id="qty-Tomato">
-      <button onclick="addToCart('Tomato',0.80,document.getElementById('qty-Tomato').value,'https://dummyimage.com/80x80/cc9966/000000&text=Tomato',7)">Add</button>
-    </div>
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/99ccff/000000&text=Cucumber" alt="Cucumber">
-      <p>Cucumber (£1.00) - Stock: <span id="stock-Cucumber">6</span></p>
-      <input type="number" min="1" value="1" id="qty-Cucumber">
-      <button onclick="addToCart('Cucumber',1.00,document.getElementById('qty-Cucumber').value,'https://dummyimage.com/80x80/99ccff/000000&text=Cucumber',6)">Add</button>
-    </div>
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Pepper" alt="Pepper">
-      <p>Pepper (£1.20) - Stock: <span id="stock-Pepper">5</span></p>
-      <input type="number" min="1" value="1" id="qty-Pepper">
-      <button onclick="addPepper()">Add</button>
-    </div>
-    <div class="product">
-      <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli" alt="Broccoli">
-      <p>Broccoli (£1.50) - Stock: <span id="stock-Broccoli">8</span></p>
-      <input type="number" min="1" value="1" id="qty-Broccoli">
-      <button onclick="addToCart('Broccoli',1.50,document.getElementById('qty-Broccoli').value,'https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli',8)">Add</button>
+  <!-- Vegetables Section -->
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">Vegetables</div>
+    <div class="products">
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/99cc99/000000&text=Carrot" alt="Carrot">
+        <p>Carrot (£0.60) - Stock: <span id="stock-Carrot">10</span></p>
+        <input type="number" min="1" value="1" id="qty-Carrot">
+        <button onclick="addToCart('Carrot',0.60,document.getElementById('qty-Carrot').value,'https://dummyimage.com/80x80/99cc99/000000&text=Carrot',10)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/cc9966/000000&text=Tomato" alt="Tomato">
+        <p>Tomato (£0.80) - Stock: <span id="stock-Tomato">7</span></p>
+        <input type="number" min="1" value="1" id="qty-Tomato">
+        <button onclick="addToCart('Tomato',0.80,document.getElementById('qty-Tomato').value,'https://dummyimage.com/80x80/cc9966/000000&text=Tomato',7)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/99ccff/000000&text=Cucumber" alt="Cucumber">
+        <p>Cucumber (£1.00) - Stock: <span id="stock-Cucumber">6</span></p>
+        <input type="number" min="1" value="1" id="qty-Cucumber">
+        <button onclick="addToCart('Cucumber',1.00,document.getElementById('qty-Cucumber').value,'https://dummyimage.com/80x80/99ccff/000000&text=Cucumber',6)">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Pepper" alt="Pepper">
+        <p>Pepper (£1.20) - Stock: <span id="stock-Pepper">5</span></p>
+        <input type="number" min="1" value="1" id="qty-Pepper">
+        <button onclick="addPepper()">Add</button>
+      </div>
+      <div class="product">
+        <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli" alt="Broccoli">
+        <p>Broccoli (£1.50) - Stock: <span id="stock-Broccoli">8</span></p>
+        <input type="number" min="1" value="1" id="qty-Broccoli">
+        <button onclick="addToCart('Broccoli',1.50,document.getElementById('qty-Broccoli').value,'https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli',8)">Add</button>
+      </div>
     </div>
   </div>
 </div>
@@ -127,6 +288,7 @@ h1 { text-align: center; margin-bottom: 20px; }
 
 <div id="successMessage">Checkout successful! Thank you for your purchase.</div>
 
+<!-- Modal -->
 <div id="overlay"></div>
 <div id="loginModal">
   <span class="close-btn" onclick="closeLogin()">×</span>
@@ -139,39 +301,38 @@ h1 { text-align: center; margin-bottom: 20px; }
 </div>
 
 <script>
-let cart = {};
-let discount = 0;
-
 // Section toggle
 function toggleSection(el) {
   const productsDiv = el.nextElementSibling;
   productsDiv.style.display = productsDiv.style.display === 'none' ? 'flex' : 'none';
 }
 
+// Cart and bugs logic same as before
+let cart = {};
+let discount = 0;
+
 // Normal add to cart
 function addToCart(name, price, qty, img, stock, bypassStock=false) {
   qty = parseInt(qty);
   if (isNaN(qty) || qty < 1) return;
-  if (!bypassStock && qty > stock) return; // No alert if bypassStock
+  if (!bypassStock && qty > stock) return;
   if (cart[name]) cart[name].quantity += qty;
   else cart[name] = { price, quantity: qty, img };
   updateCart();
 }
 
-// Pepper bug: only 1 allowed
+// Pepper bug
 function addPepper() {
   let qty = parseInt(document.getElementById('qty-Pepper').value);
   if (cart['Pepper']) {
-    // If Pepper is already in cart and user tries to add again, remove it
     delete cart['Pepper'];
     updateCart();
   } else if (qty === 1) {
-    // Only allow adding 1 if it's not already in cart
     addToCart('Pepper', 1.20, 1, 'https://dummyimage.com/80x80/ffcc99/000000&text=Pepper', 5);
   }
 }
 
-// Orange bug: also adds Banana (bypasses stock)
+// Orange bug
 function addOrange() {
   let qty = parseInt(document.getElementById('qty-Orange').value);
   addToCart('Orange',0.80,qty,'https://dummyimage.com/80x80/ffff99/000000&text=Orange',6);
@@ -241,12 +402,12 @@ function closeLogin() {
   document.getElementById('loginModal').style.display = 'none';
 }
 
+// Login & Pay with bug
 function loginAndPay() {
   const user = document.getElementById('username').value.trim();
   const pass = document.getElementById('password').value.trim();
   const errorDiv = document.getElementById('loginError');
 
-  // If username is correct
   if (user === 'user') {
     if (pass === 'pass' || pass === '') { // allow empty password
       closeLogin();
@@ -262,6 +423,7 @@ function loginAndPay() {
 
   errorDiv.innerText = 'Please enter a valid username.';
 }
+
 </script>
 
 </body>
