@@ -1,95 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Shopping Cart Task</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #f9f9f9;
-      line-height: 1.6;
-    }
-    h1, h2 {
-      color: #333;
-    }
-    code {
-      background: #eee;
-      padding: 2px 4px;
-      border-radius: 4px;
-      font-family: monospace;
-    }
-    ul {
-      margin: 10px 0 20px 20px;
-    }
-    .step {
-      margin-bottom: 20px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kingfisher Shopping Cart - User Story</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  h1, h2, h3 {
+    color: #2c3e50;
+  }
+  a {
+    color: #2980b9;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  ul {
+    margin-left: 20px;
+  }
+</style>
 </head>
 <body>
-  <h1>User Story</h1>
-  <p><strong>Goal:</strong> Test the full shopping cart workflow including products, discounts, and checkout.</p>
 
-  <h2>Scenario</h2>
+<h1>Kingfisher Shopping Cart Demo</h1>
 
-  <div class="step">
-    <h3>1. Open the site</h3>
+<p><strong>Calculator available at:</strong> <a href="https://mattlewisgit.github.io/shopping_cart_task/" target="_blank">https://mattlewisgit.github.io/shopping_cart_task/</a></p>
+
+<hr>
+
+<h2>User Story</h2>
+
+<h3>Title:</h3>
+<p>Shopping Cart</p>
+
+<h3>Description:</h3>
+<p>As a Kingfisher user, I want to add products to basket, log in, and place an order to prove that my webpage works as expected.</p>
+
+<hr>
+
+<h2>Acceptance Criteria</h2>
+<ol>
+  <li>I can add all the available products to basket.</li>
+  <li>I can remove a single product quantity from basket.</li>
+  <li>I can apply a discount using:
     <ul>
-      <li>Open <a href="https://mattlewisgit.github.io/shopping_cart_task/shopping-cart.html" target="_blank">https://mattlewisgit.github.io/shopping_cart_task/shopping-cart.html</a> in a browser.</li>
+      <li><code>SAVE10</code> = 10% discount</li>
+      <li><code>SAVE20</code> = 20% discount</li>
     </ul>
-  </div>
-
-  <div class="step">
-    <h3>2. Browse products</h3>
+  </li>
+  <li>I can only checkout with the following credentials:
     <ul>
-      <li>Click <strong>Fruits</strong> to expand and see products.</li>
-      <li>Add 2 Apples to the cart.</li>
-      <li>Attempt to add 1 Banana (should be blocked because stock = 0).</li>
-      <li>Add 1 Orange and 3 Grapes.</li>
+      <li><strong>Username:</strong> <code>user</code></li>
+      <li><strong>Password:</strong> <code>pass</code></li>
     </ul>
-  </div>
+  </li>
+  <li>I receive a <strong>checkout successful! Thank you for your purchase</strong> message.</li>
+</ol>
 
-  <div class="step">
-    <h3>3. Verify cart</h3>
-    <ul>
-      <li>Ensure items appear with correct quantities and line totals.</li>
-      <li>Verify <strong>Total</strong> reflects added items.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h3>4. Apply a discount code</h3>
-    <ul>
-      <li>Enter <code>SAVE20</code> and click <strong>Apply</strong>.</li>
-      <li>Verify <strong>Total</strong> updates with a 20% discount.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h3>5. Checkout</h3>
-    <ul>
-      <li>Click <strong>Checkout</strong>.</li>
-      <li>Enter <strong>Username:</strong> <code>user</code> and <strong>Password:</strong> <code>pass</code>.</li>
-      <li>Click <strong>Login &amp; Pay</strong>.</li>
-      <li>Confirm <strong>Checkout Successful!</strong> message appears.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h3>6. Verify empty cart</h3>
-    <ul>
-      <li>Ensure cart is cleared and <em>Basket is empty</em> message is displayed.</li>
-    </ul>
-  </div>
-
-  <div class="step">
-    <h3>7. Optional</h3>
-    <ul>
-      <li>Try adding more than 99 items of a product to test the 2-second simulated delay.</li>
-    </ul>
-  </div>
 </body>
 </html>
