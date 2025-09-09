@@ -54,9 +54,9 @@ h1 { text-align: center; margin-bottom: 20px; }
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ffff99/000000&text=Orange" alt="Orange">
-      <p>Orange ($0.80) - Stock: <span id="stock-Orange">6</span></p>
+      <p>Orange (£0.80) - Stock: <span id="stock-Orange">6</span></p>
       <input type="number" min="1" value="1" id="qty-Orange">
-      <button onclick="addToCart('Orange',0.80,document.getElementById('qty-Orange').value,'https://dummyimage.com/80x80/ffff99/000000&text=Orange',6)">Add</button>
+      <button onclick="addOrange()">Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Grapes" alt="Grapes">
@@ -99,7 +99,7 @@ h1 { text-align: center; margin-bottom: 20px; }
       <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Pepper" alt="Pepper">
       <p>Pepper (£1.20) - Stock: <span id="stock-Pepper">5</span></p>
       <input type="number" min="1" value="1" id="qty-Pepper">
-      <button onclick="addToCart('Pepper',1.20,document.getElementById('qty-Pepper').value,'https://dummyimage.com/80x80/ffcc99/000000&text=Pepper',5)">Add</button>
+      <button onclick="addPepper()">Add</button>
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli" alt="Broccoli">
@@ -116,7 +116,6 @@ h1 { text-align: center; margin-bottom: 20px; }
   <div id="cartItems">Basket is empty</div>
   <div class="cart-total" id="cartTotal">Total: £0.00</div>
 
-  <!-- Discount -->
   <div class="discount-container">
     <input type="text" id="discountCode" placeholder="Discount Code">
     <button onclick="applyDiscount()">Apply</button>
@@ -128,7 +127,6 @@ h1 { text-align: center; margin-bottom: 20px; }
 
 <div id="successMessage">Checkout successful! Thank you for your purchase.</div>
 
-<!-- Login Modal -->
 <div id="overlay"></div>
 <div id="loginModal">
   <span class="close-btn" onclick="closeLogin()">×</span>
@@ -150,22 +148,33 @@ function toggleSection(el) {
   productsDiv.style.display = productsDiv.style.display === 'none' ? 'flex' : 'none';
 }
 
-// Add to cart
+// Add to cart (normal)
 function addToCart(name, price, qty, img, stock) {
   qty = parseInt(qty);
   if (isNaN(qty) || qty < 1) return;
   if (qty > stock) { alert('Not enough stock'); return; }
-  if ((cart[name]?.quantity || 0) + qty >= 100) {
-    setTimeout(() => addCartItem(name, price, qty, img), 2000);
-  } else {
-    addCartItem(name, price, qty, img);
-  }
-}
-
-function addCartItem(name, price, qty, img) {
   if (cart[name]) cart[name].quantity += qty;
   else cart[name] = { price, quantity: qty, img };
   updateCart();
+}
+
+// Pepper bug: only allow 1
+function addPepper() {
+  let qty = parseInt(document.getElementById('qty-Pepper').value);
+  if (qty > 1) {
+    delete cart['Pepper'];
+    updateCart();
+    alert("Adding more than 1 Pepper? We removed it!");
+  } else {
+    addToCart('Pepper',1.20,qty,'https://dummyimage.com/80x80/ffcc99/000000&text=Pepper',5);
+  }
+}
+
+// Orange bug: also adds Banana
+function addOrange() {
+  let qty = parseInt(document.getElementById('qty-Orange').value);
+  addToCart('Orange',0.80,qty,'https://dummyimage.com/80x80/ffff99/000000&text=Orange',6);
+  addToCart('Banana',0.50,1,'https://dummyimage.com/80x80/ffcc99/000000&text=Banana',0);
 }
 
 // Update cart
@@ -211,7 +220,7 @@ function applyDiscount() {
   updateCart();
 }
 
-// Checkout modal
+// Checkout
 function checkout() {
   const total = updateCart();
   document.getElementById('overlay').style.display = 'block';
