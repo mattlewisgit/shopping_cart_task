@@ -62,10 +62,20 @@
 
     .cart-item {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
+      gap: 10px;
     }
+
+    .cart-item img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .cart-item span { margin-right: 5px; }
 
     .cart-item input {
       width: 40px;
@@ -112,6 +122,7 @@
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
       z-index: 1000;
+      width: 250px;
     }
 
     #overlay {
@@ -125,6 +136,16 @@
 
     #loginPopup input { display: block; width: 100%; margin: 8px 0; padding: 5px; }
     #loginPopup button { width: 100%; margin-top: 10px; }
+
+    /* Close button for popup */
+    #loginPopup .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
@@ -137,66 +158,20 @@
       <div class="product">
         <img src="https://dummyimage.com/80x80/ffcccc/000000&text=Apple" alt="Apple">
         <p>Apple (£1.00)</p>
-        <button onclick="addToCart('Apple', 1.00)">Add</button>
+        <input type="number" min="1" value="1" id="qty-Apple">
+        <button onclick="addToCart('Apple', 1.00, document.getElementById('qty-Apple').value, 'https://dummyimage.com/80x80/ffcccc/000000&text=Apple')">Add</button>
       </div>
       <div class="product">
         <img src="https://dummyimage.com/80x80/ffffcc/000000&text=Banana" alt="Banana">
         <p>Banana (£0.50)</p>
-        <button onclick="addToCart('Banana', 0.50)">Add</button>
+        <input type="number" min="1" value="1" id="qty-Banana">
+        <button onclick="addToCart('Banana', 0.50, document.getElementById('qty-Banana').value, 'https://dummyimage.com/80x80/ffffcc/000000&text=Banana')">Add</button>
       </div>
       <div class="product">
         <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Orange" alt="Orange">
         <p>Orange (£0.80)</p>
-        <button onclick="addToCart('Orange', 0.80)">Add</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Drinks Section -->
-  <div class="section">
-    <div class="section-header" onclick="toggleSection(this)">Drinks</div>
-    <div class="products">
-      <div class="product">
-        <img src="https://dummyimage.com/80x80/ccffff/000000&text=Water" alt="Water">
-        <p>Water (£1.20)</p>
-        <button onclick="addToCart('Water', 1.20)">Add</button>
-      </div>
-      <div class="product">
-        <img src="https://dummyimage.com/80x80/ccccff/000000&text=Juice" alt="Juice">
-        <p>Juice (£1.50)</p>
-        <button onclick="addToCart('Juice', 1.50)">Add</button>
-      </div>
-      <div class="product">
-        <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Coffee" alt="Coffee">
-        <p>Coffee (£2.00)</p>
-        <button onclick="addToCart('Coffee', 2.00)">Add</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Snacks Section -->
-  <div class="section">
-    <div class="section-header" onclick="toggleSection(this)">Snacks</div>
-    <div class="products">
-      <div class="product">
-        <img src="https://dummyimage.com/80x80/ffccff/000000&text=Chips" alt="Chips">
-        <p>Chips (£1.30)</p>
-        <button onclick="addToCart('Chips', 1.30)">Add</button>
-      </div>
-      <div class="product">
-        <img src="https://dummyimage.com/80x80/cc99ff/000000&text=Chocolate" alt="Chocolate">
-        <p>Chocolate (£1.80)</p>
-        <button onclick="addToCart('Chocolate', 1.80)">Add</button>
-      </div>
-      <div class="product">
-        <img src="https://dummyimage.com/80x80/99ffcc/000000&text=Biscuits" alt="Biscuits">
-        <p>Biscuits (£1.40)</p>
-        <button onclick="addToCart('Biscuits', 1.40)">Add</button>
-      </div>
-      <div class="product">
-        <img src="https://dummyimage.com/80x80/ff9966/000000&text=Popcorn" alt="Popcorn">
-        <p>Popcorn (£1.60)</p>
-        <button onclick="addToCart('Popcorn', 1.60)">Add</button>
+        <input type="number" min="1" value="1" id="qty-Orange">
+        <button onclick="addToCart('Orange', 0.80, document.getElementById('qty-Orange').value, 'https://dummyimage.com/80x80/ffcc99/000000&text=Orange')">Add</button>
       </div>
     </div>
   </div>
@@ -213,11 +188,12 @@
   <!-- Overlay + Login Popup -->
   <div id="overlay"></div>
   <div id="loginPopup">
+    <div class="close-btn" onclick="closePopup()">×</div>
     <h3>Login to Continue</h3>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
-    <button onclick="submitLogin()">Login</button>
     <p id="loginError" class="error"></p>
+    <button onclick="submitLogin()">Login</button>
   </div>
 
   <script>
@@ -228,22 +204,16 @@
       productsDiv.style.display = productsDiv.style.display === "none" ? "flex" : "none";
     }
 
-    function addToCart(item, price) {
-      if (!cart[item]) {
-        cart[item] = { price, quantity: 1 };
-      } else {
-        cart[item].quantity++;
-      }
+    function addToCart(name, price, qty, img) {
+      qty = parseInt(qty);
+      if(qty <= 0 || isNaN(qty)) return alert("Invalid quantity!");
+      if(cart[name]) cart[name].qty += qty;
+      else cart[name] = {price, qty, img};
       renderCart();
     }
 
-    function updateQuantity(item, newQty) {
-      newQty = parseInt(newQty);
-      if (isNaN(newQty) || newQty <= 0) {
-        delete cart[item];
-      } else {
-        cart[item].quantity = newQty;
-      }
+    function removeFromCart(name) {
+      delete cart[name];
       renderCart();
     }
 
@@ -251,53 +221,50 @@
       const cartDiv = document.getElementById("cart");
       cartDiv.innerHTML = "";
       let total = 0;
-
-      for (let item in cart) {
-        const entry = cart[item];
-        const subtotal = entry.price * entry.quantity;
-        total += subtotal;
-
-        const div = document.createElement("div");
-        div.className = "cart-item";
-        div.innerHTML = `
-          <span>${item} (£${entry.price})</span>
-          <input type="number" min="1" value="${entry.quantity}" onchange="updateQuantity('${item}', this.value)">
+      for(let item in cart) {
+        const row = document.createElement("div");
+        row.className = "cart-item";
+        row.innerHTML = `
+          <img src="${cart[item].img}" alt="${item}">
+          <span>${item} (£${cart[item].price})</span> x 
+          <input type="number" min="1" value="${cart[item].qty}" onchange="updateQty('${item}', this.value)">
+          <span>Subtotal: £${(cart[item].price * cart[item].qty).toFixed(2)}</span>
           <button onclick="removeFromCart('${item}')">Remove</button>
         `;
-        cartDiv.appendChild(div);
+        cartDiv.appendChild(row);
+        total += cart[item].price * cart[item].qty;
       }
-
       document.getElementById("total").textContent = total.toFixed(2);
-      document.getElementById("message").textContent = "";
     }
 
-    function removeFromCart(item) {
-      delete cart[item];
-      renderCart();
+    function updateQty(name, value) {
+      value = parseInt(value);
+      if(value <= 0 || isNaN(value)) removeFromCart(name);
+      else {
+        cart[name].qty = value;
+        renderCart();
+      }
     }
 
     function checkout() {
-      const message = document.getElementById("message");
-      if (Object.keys(cart).length === 0) {
-        message.textContent = "Your basket is empty!";
-        message.className = "error";
+      if(Object.keys(cart).length === 0) {
+        alert("Basket is empty!");
         return;
       }
-
       document.getElementById("overlay").style.display = "block";
       document.getElementById("loginPopup").style.display = "block";
-      document.getElementById("loginError").textContent = "";
-      document.getElementById("username").value = "";
-      document.getElementById("password").value = "";
+    }
+
+    function closePopup() {
+      document.getElementById("overlay").style.display = "none";
+      document.getElementById("loginPopup").style.display = "none";
     }
 
     function submitLogin() {
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
-
       if(username && password) {
-        document.getElementById("overlay").style.display = "none";
-        document.getElementById("loginPopup").style.display = "none";
+        closePopup();
         cart = {};
         renderCart();
         const message = document.getElementById("message");
