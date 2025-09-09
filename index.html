@@ -100,7 +100,6 @@
     .success { color: green; }
     .error { color: red; }
 
-    /* Login popup styles */
     #loginPopup {
       display: none;
       position: fixed;
@@ -136,17 +135,17 @@
     <div class="section-header" onclick="toggleSection(this)">Fruits</div>
     <div class="products">
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Apple" alt="Apple">
+        <img src="https://dummyimage.com/80x80/ffcccc/000000&text=Apple" alt="Apple">
         <p>Apple (£1.00)</p>
         <button onclick="addToCart('Apple', 1.00)">Add</button>
       </div>
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Banana" alt="Banana">
+        <img src="https://dummyimage.com/80x80/ffffcc/000000&text=Banana" alt="Banana">
         <p>Banana (£0.50)</p>
         <button onclick="addToCart('Banana', 0.50)">Add</button>
       </div>
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Orange" alt="Orange">
+        <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Orange" alt="Orange">
         <p>Orange (£0.80)</p>
         <button onclick="addToCart('Orange', 0.80)">Add</button>
       </div>
@@ -158,17 +157,17 @@
     <div class="section-header" onclick="toggleSection(this)">Drinks</div>
     <div class="products">
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Water" alt="Water">
+        <img src="https://dummyimage.com/80x80/ccffff/000000&text=Water" alt="Water">
         <p>Water (£1.20)</p>
         <button onclick="addToCart('Water', 1.20)">Add</button>
       </div>
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Juice" alt="Juice">
+        <img src="https://dummyimage.com/80x80/ccccff/000000&text=Juice" alt="Juice">
         <p>Juice (£1.50)</p>
         <button onclick="addToCart('Juice', 1.50)">Add</button>
       </div>
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Coffee" alt="Coffee">
+        <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Coffee" alt="Coffee">
         <p>Coffee (£2.00)</p>
         <button onclick="addToCart('Coffee', 2.00)">Add</button>
       </div>
@@ -180,22 +179,22 @@
     <div class="section-header" onclick="toggleSection(this)">Snacks</div>
     <div class="products">
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Chips" alt="Chips">
+        <img src="https://dummyimage.com/80x80/ffccff/000000&text=Chips" alt="Chips">
         <p>Chips (£1.30)</p>
         <button onclick="addToCart('Chips', 1.30)">Add</button>
       </div>
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Chocolate" alt="Chocolate">
+        <img src="https://dummyimage.com/80x80/cc99ff/000000&text=Chocolate" alt="Chocolate">
         <p>Chocolate (£1.80)</p>
         <button onclick="addToCart('Chocolate', 1.80)">Add</button>
       </div>
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Biscuits" alt="Biscuits">
+        <img src="https://dummyimage.com/80x80/99ffcc/000000&text=Biscuits" alt="Biscuits">
         <p>Biscuits (£1.40)</p>
         <button onclick="addToCart('Biscuits', 1.40)">Add</button>
       </div>
       <div class="product">
-        <img src="https://via.placeholder.com/80?text=Popcorn" alt="Popcorn">
+        <img src="https://dummyimage.com/80x80/ff9966/000000&text=Popcorn" alt="Popcorn">
         <p>Popcorn (£1.60)</p>
         <button onclick="addToCart('Popcorn', 1.60)">Add</button>
       </div>
@@ -293,28 +292,20 @@
     }
 
     function submitLogin() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const error = document.getElementById("loginError");
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
 
-      if (username !== "test" || password !== "123") {
-        error.textContent = "Invalid credentials!";
-        return;
-      }
-
-      document.getElementById("overlay").style.display = "none";
-      document.getElementById("loginPopup").style.display = "none";
-
-      const message = document.getElementById("message");
-      message.textContent = "Processing payment...";
-      message.className = "";
-
-      setTimeout(() => {
-        message.textContent = "✅ Checkout complete! Thank you for your order.";
-        message.className = "success";
+      if(username && password) {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("loginPopup").style.display = "none";
         cart = {};
         renderCart();
-      }, 2000);
+        const message = document.getElementById("message");
+        message.textContent = "Checkout successful!";
+        message.className = "success";
+      } else {
+        document.getElementById("loginError").textContent = "Please enter username and password!";
+      }
     }
   </script>
 </body>
