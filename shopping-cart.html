@@ -165,7 +165,6 @@ function addPepper() {
     // If Pepper is already in cart and user tries to add again, remove it
     delete cart['Pepper'];
     updateCart();
-    alert("Adding more than 1 Pepper? We removed it!");
   } else if (qty === 1) {
     // Only allow adding 1 if it's not already in cart
     addToCart('Pepper', 1.20, 1, 'https://dummyimage.com/80x80/ffcc99/000000&text=Pepper', 5);
