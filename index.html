@@ -32,6 +32,19 @@
       border-left: 4px solid #0066cc;
       margin-bottom: 20px;
     }
+    table {
+      border-collapse: collapse;
+      margin: 10px 0 20px 0;
+      width: 60%;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #ddd;
+    }
   </style>
 </head>
 <body>
@@ -52,18 +65,40 @@
   <ul>
     <li>I can add all the available products to basket.</li>
     <li>I can remove a single product quantity from basket.</li>
-    <li>I can apply a discount using:
-      <ul>
-        <li><code>SAVE10</code> = 10% discount</li>
-        <li><code>SAVE20</code> = 20% discount</li>
-      </ul>
-    </li>
-    <li>I can only checkout with the following credentials:
-      <ul>
-        <li><strong>Username:</strong> <code>user</code></li>
-        <li><strong>Password:</strong> <code>pass</code></li>
-      </ul>
-    </li>
+    <li>I can apply a discount using the following codes:</li>
+  </ul>
+
+  <table>
+    <tr>
+      <th>Discount Code</th>
+      <th>Discount Percentage</th>
+    </tr>
+    <tr>
+      <td>SAVE10</td>
+      <td>10%</td>
+    </tr>
+    <tr>
+      <td>SAVE20</td>
+      <td>20%</td>
+    </tr>
+  </table>
+
+  <ul>
+    <li>I can only checkout with the following credentials:</li>
+  </ul>
+
+  <table>
+    <tr>
+      <th>Username</th>
+      <th>Password</th>
+    </tr>
+    <tr>
+      <td>user</td>
+      <td>pass</td>
+    </tr>
+  </table>
+
+  <ul>
     <li>I receive a <strong>checkout successful! Thank you for your purchase</strong> message.</li>
   </ul>
 </body>
