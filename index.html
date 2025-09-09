@@ -130,7 +130,7 @@
 
 <h1>Kingfisher Shopping Cart</h1>
 
-<!-- Sections -->
+<!-- Fruits Section -->
 <div>
   <div class="section-header" onclick="toggleSection(this)">Fruits</div>
   <div class="products">
@@ -165,35 +165,42 @@
       <input type="number" min="1" value="1" id="qty-Kiwi">
       <button onclick="addToCart('Kiwi',1.50,document.getElementById('qty-Kiwi').value,'https://dummyimage.com/80x80/ccccff/000000&text=Kiwi',8)">Add</button>
     </div>
+  </div>
+</div>
+
+<!-- Vegetables Section -->
+<div>
+  <div class="section-header" onclick="toggleSection(this)">Vegetables</div>
+  <div class="products">
     <div class="product">
-      <img src="https://dummyimage.com/80x80/ffccff/000000&text=Mango" alt="Mango">
-      <p>Mango (£1.80) - Stock: <span id="stock-Mango">4</span></p>
-      <input type="number" min="1" value="1" id="qty-Mango">
-      <button onclick="addToCart('Mango',1.80,document.getElementById('qty-Mango').value,'https://dummyimage.com/80x80/ffccff/000000&text=Mango',4)">Add</button>
+      <img src="https://dummyimage.com/80x80/99cc99/000000&text=Carrot" alt="Carrot">
+      <p>Carrot (£0.60) - Stock: <span id="stock-Carrot">10</span></p>
+      <input type="number" min="1" value="1" id="qty-Carrot">
+      <button onclick="addToCart('Carrot',0.60,document.getElementById('qty-Carrot').value,'https://dummyimage.com/80x80/99cc99/000000&text=Carrot',10)">Add</button>
     </div>
     <div class="product">
-      <img src="https://dummyimage.com/80x80/99ccff/000000&text=Peach" alt="Peach">
-      <p>Peach (£1.20) - Stock: <span id="stock-Peach">7</span></p>
-      <input type="number" min="1" value="1" id="qty-Peach">
-      <button onclick="addToCart('Peach',1.20,document.getElementById('qty-Peach').value,'https://dummyimage.com/80x80/99ccff/000000&text=Peach',7)">Add</button>
+      <img src="https://dummyimage.com/80x80/cc9966/000000&text=Tomato" alt="Tomato">
+      <p>Tomato (£0.80) - Stock: <span id="stock-Tomato">7</span></p>
+      <input type="number" min="1" value="1" id="qty-Tomato">
+      <button onclick="addToCart('Tomato',0.80,document.getElementById('qty-Tomato').value,'https://dummyimage.com/80x80/cc9966/000000&text=Tomato',7)">Add</button>
     </div>
     <div class="product">
-      <img src="https://dummyimage.com/80x80/ff9966/000000&text=Pear" alt="Pear">
-      <p>Pear (£1.10) - Stock: <span id="stock-Pear">9</span></p>
-      <input type="number" min="1" value="1" id="qty-Pear">
-      <button onclick="addToCart('Pear',1.10,document.getElementById('qty-Pear').value,'https://dummyimage.com/80x80/ff9966/000000&text=Pear',9)">Add</button>
+      <img src="https://dummyimage.com/80x80/99ccff/000000&text=Cucumber" alt="Cucumber">
+      <p>Cucumber (£1.00) - Stock: <span id="stock-Cucumber">6</span></p>
+      <input type="number" min="1" value="1" id="qty-Cucumber">
+      <button onclick="addToCart('Cucumber',1.00,document.getElementById('qty-Cucumber').value,'https://dummyimage.com/80x80/99ccff/000000&text=Cucumber',6)">Add</button>
     </div>
     <div class="product">
-      <img src="https://dummyimage.com/80x80/99ffcc/000000&text=Plum" alt="Plum">
-      <p>Plum (£1.30) - Stock: <span id="stock-Plum">6</span></p>
-      <input type="number" min="1" value="1" id="qty-Plum">
-      <button onclick="addToCart('Plum',1.30,document.getElementById('qty-Plum').value,'https://dummyimage.com/80x80/99ffcc/000000&text=Plum',6)">Add</button>
+      <img src="https://dummyimage.com/80x80/ffcc99/000000&text=Pepper" alt="Pepper">
+      <p>Pepper (£1.20) - Stock: <span id="stock-Pepper">5</span></p>
+      <input type="number" min="1" value="1" id="qty-Pepper">
+      <button onclick="addToCart('Pepper',1.20,document.getElementById('qty-Pepper').value,'https://dummyimage.com/80x80/ffcc99/000000&text=Pepper',5)">Add</button>
     </div>
     <div class="product">
-      <img src="https://dummyimage.com/80x80/ffcc66/000000&text=Strawberry" alt="Strawberry">
-      <p>Strawberry (£2.50) - Stock: <span id="stock-Strawberry">3</span></p>
-      <input type="number" min="1" value="1" id="qty-Strawberry">
-      <button onclick="addToCart('Strawberry',2.50,document.getElementById('qty-Strawberry').value,'https://dummyimage.com/80x80/ffcc66/000000&text=Strawberry',3)">Add</button>
+      <img src="https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli" alt="Broccoli">
+      <p>Broccoli (£1.50) - Stock: <span id="stock-Broccoli">8</span></p>
+      <input type="number" min="1" value="1" id="qty-Broccoli">
+      <button onclick="addToCart('Broccoli',1.50,document.getElementById('qty-Broccoli').value,'https://dummyimage.com/80x80/ccffcc/000000&text=Broccoli',8)">Add</button>
     </div>
   </div>
 </div>
@@ -239,6 +246,18 @@ function addToCart(name, price, qty, img, stock) {
   qty = parseInt(qty);
   if (isNaN(qty) || qty < 1) return;
   if (qty > stock) { alert('Not enough stock'); return; }
+
+  // Simulate 2-second delay if total quantity > 99
+  if ((cart[name]?.quantity || 0) + qty >= 100) {
+    setTimeout(() => {
+      addCartItem(name, price, qty, img);
+    }, 2000);
+  } else {
+    addCartItem(name, price, qty, img);
+  }
+}
+
+function addCartItem(name, price, qty, img) {
   if (cart[name]) {
     cart[name].quantity += qty;
   } else {
