@@ -1,36 +1,95 @@
-## User Story
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shopping Cart Task</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      line-height: 1.6;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    ul {
+      margin: 10px 0 20px 20px;
+    }
+    .step {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>User Story</h1>
+  <p><strong>Goal:</strong> Test the full shopping cart workflow including products, discounts, and checkout.</p>
 
-**Goal:** Test the full shopping cart workflow including products, discounts, and checkout.
+  <h2>Scenario</h2>
 
-**Scenario:**
+  <div class="step">
+    <h3>1. Open the site</h3>
+    <ul>
+      <li>Open <a href="https://mattlewisgit.github.io/shopping_cart_task/" target="_blank">https://mattlewisgit.github.io/shopping_cart_task/</a> in a browser.</li>
+    </ul>
+  </div>
 
-1. **Open the site:**  
-   - Open `https://mattlewisgit.github.io/shopping_cart_task/` in a browser.
+  <div class="step">
+    <h3>2. Browse products</h3>
+    <ul>
+      <li>Click <strong>Fruits</strong> to expand and see products.</li>
+      <li>Add 2 Apples to the cart.</li>
+      <li>Attempt to add 1 Banana (should be blocked because stock = 0).</li>
+      <li>Add 1 Orange and 3 Grapes.</li>
+    </ul>
+  </div>
 
-2. **Browse products:**  
-   - Click **Fruits** to expand and see products.  
-   - Add 2 Apples to the cart.  
-   - Attempt to add 1 Banana (should be blocked because stock = 0).  
-   - Add 1 Orange and 3 Grapes.
+  <div class="step">
+    <h3>3. Verify cart</h3>
+    <ul>
+      <li>Ensure items appear with correct quantities and line totals.</li>
+      <li>Verify <strong>Total</strong> reflects added items.</li>
+    </ul>
+  </div>
 
-3. **Verify cart:**  
-   - Ensure items appear with correct quantities and line totals.  
-   - Verify **Total** reflects added items.
+  <div class="step">
+    <h3>4. Apply a discount code</h3>
+    <ul>
+      <li>Enter <code>SAVE20</code> and click <strong>Apply</strong>.</li>
+      <li>Verify <strong>Total</strong> updates with a 20% discount.</li>
+    </ul>
+  </div>
 
-4. **Apply a discount code:**  
-   - Enter `SAVE20` and click **Apply**.  
-   - Verify **Total** updates with a 20% discount.
+  <div class="step">
+    <h3>5. Checkout</h3>
+    <ul>
+      <li>Click <strong>Checkout</strong>.</li>
+      <li>Enter <strong>Username:</strong> <code>user</code> and <strong>Password:</strong> <code>pass</code>.</li>
+      <li>Click <strong>Login &amp; Pay</strong>.</li>
+      <li>Confirm <strong>Checkout Successful!</strong> message appears.</li>
+    </ul>
+  </div>
 
-5. **Checkout:**  
-   - Click **Checkout**.  
-   - Enter **Username:** `user` and **Password:** `pass`.  
-   - Click **Login & Pay**.  
-   - Confirm **Checkout Successful!** message appears.
+  <div class="step">
+    <h3>6. Verify empty cart</h3>
+    <ul>
+      <li>Ensure cart is cleared and <em>Basket is empty</em> message is displayed.</li>
+    </ul>
+  </div>
 
-6. **Verify empty cart:**  
-   - Ensure cart is cleared and **Basket is empty** message is displayed.
-
-7. **Optional:**  
-   - Try adding more than 99 items of a product to test the 2-second simulated delay.
-
----
+  <div class="step">
+    <h3>7. Optional</h3>
+    <ul>
+      <li>Try adding more than 99 items of a product to test the 2-second simulated delay.</li>
+    </ul>
+  </div>
+</body>
+</html>
