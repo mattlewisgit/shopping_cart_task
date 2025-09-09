@@ -54,7 +54,7 @@ h1 { text-align: center; margin-bottom: 20px; }
     </div>
     <div class="product">
       <img src="https://dummyimage.com/80x80/ffff99/000000&text=Orange" alt="Orange">
-      <p>Orange (£0.80) - Stock: <span id="stock-Orange">6</span></p>
+      <p>Orange ($0.80) - Stock: <span id="stock-Orange">6</span></p>
       <input type="number" min="1" value="1" id="qty-Orange">
       <button onclick="addToCart('Orange',0.80,document.getElementById('qty-Orange').value,'https://dummyimage.com/80x80/ffff99/000000&text=Orange',6)">Add</button>
     </div>
@@ -211,16 +211,19 @@ function applyDiscount() {
   updateCart();
 }
 
-// Checkout modal with BUG
+// Checkout modal
 function checkout() {
-  updateCart();
-  // BUG: allows checkout even when basket is empty
-  // BUG: wrong total shown
-  document.getElementById('modalCartTotal').innerText =
-    "Total to pay: you are buying nothing, but we will still charge you £999.99!";
+  const total = updateCart();
   document.getElementById('overlay').style.display = 'block';
   document.getElementById('loginModal').style.display = 'block';
   document.getElementById('loginError').innerText = '';
+
+  if (Object.keys(cart).length === 0) {
+    document.getElementById('modalCartTotal').innerText = 
+      "Total to pay: you are buying nothing, but we will still charge you £999.99!";
+  } else {
+    document.getElementById('modalCartTotal').innerText = `Total to pay: £${total.toFixed(2)}`;
+  }
 }
 
 function closeLogin() {
