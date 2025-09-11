@@ -291,23 +291,19 @@ h1 {
 </div>
 
 <script>
-// Section toggle
 function toggleSection(el) {
   const productsDiv = el.nextElementSibling;
   productsDiv.style.display = productsDiv.style.display === 'none' ? 'flex' : 'none';
 }
 
-// Cart and bugs logic same as before
 let cart = {};
 let discount = 0;
 
-// Normal add to cart (with carrot bug)
 function addToCart(name, price, qty, img, stock, bypassStock=false) {
   qty = parseInt(qty);
   if (isNaN(qty)) return;
   if (!bypassStock && qty > stock) return;
 
-  // Introduce carrot bug: override price and image
   if (name === 'Carrot') {
     price = 0.70; // wrong price
     img = 'https://dummyimage.com/80x80/cc9966/000000&text=Tomato'; // tomato image
@@ -318,7 +314,6 @@ function addToCart(name, price, qty, img, stock, bypassStock=false) {
   updateCart();
 }
 
-// Pepper bug
 function addPepper() {
   let qty = parseInt(document.getElementById('qty-Pepper').value);
   if (cart['Pepper']) {
@@ -329,14 +324,12 @@ function addPepper() {
   }
 }
 
-// Orange bug
 function addOrange() {
   let qty = parseInt(document.getElementById('qty-Orange').value);
   addToCart('Orange',0.80,qty,'https://dummyimage.com/80x80/ffff99/000000&text=Orange',6);
   addToCart('Banana',0.50,1,'https://dummyimage.com/80x80/ffcc99/000000&text=Banana',0,true);
 }
 
-// Update cart
 function updateCart() {
   const cartItems = document.getElementById('cartItems');
   cartItems.innerHTML = '';
@@ -355,13 +348,11 @@ function updateCart() {
   return totalWithDiscount;
 }
 
-// Remove item
 function removeFromCart(name) {
   delete cart[name];
   updateCart();
 }
 
-// Discount codes
 const discountCodes = {};
 for (let i = 10; i <= 100; i += 10) discountCodes[`SAVE${i}`] = i/100;
 function applyDiscount() {
@@ -379,7 +370,6 @@ function applyDiscount() {
   updateCart();
 }
 
-// Checkout
 function checkout() {
   const total = updateCart();
   document.getElementById('overlay').style.display = 'block';
@@ -399,7 +389,6 @@ function closeLogin() {
   document.getElementById('loginModal').style.display = 'none';
 }
 
-// Login & Pay with bug
 function loginAndPay() {
   const user = document.getElementById('username').value.trim();
   const pass = document.getElementById('password').value.trim();
